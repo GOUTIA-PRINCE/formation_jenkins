@@ -1,16 +1,14 @@
-//My first pipeline
+// My first pipeline
 pipeline {
     agent any
-    Stages {
+    stages {
         stage("Hello") {
             steps {
                 echo "Hello World"
-            }
-            steps {
                 echo "bonjour le monde!"
             }
         }
-        stage("Informations Systeme"){
+        stage("Informations Systeme") {
             steps {
                 sh "date"
                 sh "whoami"
@@ -18,3 +16,4 @@ pipeline {
             }
         }
     }
+}
