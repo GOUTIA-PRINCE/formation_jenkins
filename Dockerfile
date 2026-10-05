@@ -1,6 +1,6 @@
+FROM docker:cli AS docker-cli
+
 FROM jenkins/jenkins:lts-jdk17
 USER root
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends docker.io && \
-    rm -rf /var/lib/apt/lists/*
+COPY --from=docker-cli /usr/local/bin/docker /usr/local/bin/docker
 USER jenkins
