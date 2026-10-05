@@ -32,5 +32,11 @@ pipeline {
                 archiveArtifacts artifacts: 'build/**', fingerprint: true
             }
         }
+        stage('Docker Build') {
+            steps {
+                echo 'Construction de l image Docker...'
+                sh 'docker build -t mon-site-web:latest .'
+            }
+        }
     }
 }
