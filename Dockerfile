@@ -1,3 +1,4 @@
-FROM nginx:alpine
-COPY build/ /usr/share/nginx/html/
-EXPOSE 80
+FROM jenkins/jenkins:lts-jdk17
+USER root
+RUN apt-get update && apt-get install -y docker.io
+USER jenkins
