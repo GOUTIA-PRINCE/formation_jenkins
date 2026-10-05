@@ -11,31 +11,34 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Preparation du dossier de build...'
-                sh 'mkdir -p build'
-                sh 'cp site/index.html build/'
-                sh 'cp site/style.css build/'
-                sh 'ls -la build/'
+                sh 'mkdir -p formation_jenkins/build'
+                sh 'cp formation_jenkins/site/index.html formation_jenkins/build/'
+                sh 'cp formation_jenkins/site/style.css formation_jenkins/build/'
+                sh 'ls -la formation_jenkins/build/'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Verification que les fichiers existent bien...'
-                sh 'test -f build/index.html && echo "OK : index.html present"'
-                sh 'test -f build/style.css && echo "OK : style.css present"'
+                sh 'test -f formation_jenkins/build/index.html && echo "OK : index.html present"'
+                sh 'test -f formation_jenkins/build/style.css && echo "OK : style.css present"'
             }
         }
 
         stage('Archive') {
             steps {
                 echo 'Archivage du resultat du build...'
-                archiveArtifacts artifacts: 'build/**', fingerprint: true
+                archiveArtifacts artifacts: 'formation_jenkins/build/**', fingerprint: true
             }
         }
+
         stage('Docker Build') {
             steps {
                 echo 'Construction de l image Docker...'
-                sh 'docker build -t mon-site-web:latest .'
+                dir('formation_jenkins') {
+                    sh 'docker build -t mon-site-web:latest .'
+                }
             }
         }
     }
